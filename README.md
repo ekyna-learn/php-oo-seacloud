@@ -56,22 +56,23 @@ développeurs chargés de la mise en place de la plateforme de déploiement des 
     🔒 Reboot server | GET /account_reboot.php?id=[server-id] | Redémarrer le serveur ayant l'identifiant _[server-id]_ | 
     🔒 Reset server | GET /account_server-reset.php?id=[server-id] | Réinstaller le serveur ayant l'identifiant _[server-id]_ | 
     🔒 Delete server | POST /account_server-delete.php?id=[server-id] | Supprimer le serveur ayant l'identifiant _[server-id]_ | 
-    Server ready | GET /api_ready.php?id=[server-id] | Marquer un serveur comme "Démarré" _(appelée par la plateforme de déploiement)_ 
+    Server ready | GET /api_ready.php?id=[server-id]&ip=[ip-address] | Marquer un serveur comme "Démarré" _(appelée par la plateforme de déploiement)_ 
 
    💡 _Les pages marquées d'un cadenas (🔒) sont sécurisées : l'internaute doit être authentifié (connecté) pour y accéder_.
 
 
 3. Cycle de vie d'un serveur
 
-   * L'état initial d'un serveur est &laquo;En attente&raquo; (_STATE_PENDING_).
+   * L'état initial d'un serveur est &laquo;En attente&raquo; (_STATE_PENDING_) avec une adresse IP indéfinie (NULL).
    * Une fois le serveur déployé, la plateforme  de déploiement (gérée par d'autres développeurs) appelera 
-   l'url ```GET /api_ready.php?id=[server-id]``` pour marquer le serveur comme étant &laquo;Prêt&raquo; (_STATE_READY_).
-     Un email sera automatiquement envoyé au client pour l'informé du déploiement de sont serveur.
+     l'url ```GET /api_ready.php?id=[server-id]&ip=[ip-adress]``` pour marquer le serveur comme étant &laquo;Prêt&raquo; 
+     (_STATE_READY_) et lui attribuer une adresse IP. Un email sera automatiquement envoyé au client pour l'informé du 
+     déploiement de sont serveur.
    * Si le client décide de redémarrer un serveur, ce dernier passera en statut &laquo;Arrêté&raquo; (_STATE_STOPED_). 
      Une fois redémarré, la plate forme de déploiement appellera de nouveau l'url ```GET /api_ready.php?id=[server-id]```.
    * Si le client décide de réinitialiser un serveur, ce dernier passera en statut &laquo;En attente&raquo; 
-     (_STATE_PENDING_). Une fois re-déployé, la plate forme de déploiement appellera de nouveau l'url 
-     ```GET /api_ready.php?id=[server-id]```.
+     (_STATE_PENDING_) et son adresse IP sera supprimée (passée à NULL). Une fois re-déployé, la plate forme de 
+     déploiement appellera de nouveau l'url ```GET /api_ready.php?id=[server-id]```.
 
 
 ### Annexes
