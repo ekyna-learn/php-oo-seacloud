@@ -1,6 +1,20 @@
 PHP OO - SeaCloud
 ===
 
+### Correction
+
+* Configurer l'accès à la base de données dans le fichier _bootstrap.php_. 
+* Créer la base de données en executant le fichier _create-database.php_. :
+    
+        php create-database.php
+
+* Lancer le serveur web
+
+        cd public
+        php -S localhost:8000
+
+<hr>
+
 ![Class diagram](doc/logo.png)
 
 ### Création d'un site pour un hébergeur de serveur virtuels privés.
